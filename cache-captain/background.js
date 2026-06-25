@@ -226,7 +226,7 @@ chrome.webRequest.onHeadersReceived.addListener(
       tabCache.set(tabId, { value, color, label, header: monitoredHeader });
     }
   },
-  { urls: ["<all_urls>"] },
+  { urls: ["http://*/*", "https://*/*"] },
   ["responseHeaders"]
 );
 
