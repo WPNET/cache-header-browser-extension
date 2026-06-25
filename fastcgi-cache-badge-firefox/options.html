@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cache Header Badge — Options</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1.2em 1.6em;
+      min-width: 280px;
+      max-width: 420px;
+    }
+    h2 {
+      margin: 0 0 0.8em;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin: 0.45em 0;
+      cursor: pointer;
+    }
+    label input[type="radio"] {
+      margin-right: 0.45em;
+    }
+    #custom-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-top: 0.2em;
+    }
+    #custom-row label {
+      margin: 0;
+      white-space: nowrap;
+    }
+    #custom-input {
+      font-family: monospace;
+      font-size: 0.9em;
+      flex: 1;
+      min-width: 0;
+      padding: 0.2em 0.4em;
+    }
+    #status {
+      font-size: 0.85em;
+      color: #27ae60;
+      min-height: 1.2em;
+      margin-top: 0.7em;
+    }
+  </style>
+</head>
+<body>
+  <h2>Response header to monitor</h2>
+  <form id="options-form">
+    <label><input type="radio" name="header" value="fastcgi-cache"> fastcgi-cache</label>
+    <label><input type="radio" name="header" value="x-fastcgi-cache"> x-fastcgi-cache</label>
+    <label><input type="radio" name="header" value="x-cache"> x-cache</label>
+    <label><input type="radio" name="header" value="x-cache-status"> x-cache-status</label>
+    <label><input type="radio" name="header" value="cf-cache-status"> cf-cache-status <span style="color:#888">(Cloudflare)</span></label>
+    <div id="custom-row">
+      <label><input type="radio" name="header" value="custom"> Custom:</label>
+      <input type="text" id="custom-input" placeholder="e.g. x-varnish-cache" autocomplete="off" spellcheck="false">
+    </div>
+  </form>
+  <hr style="margin: 1em 0; border: none; border-top: 1px solid #ccc;">
+  <label>
+    <input type="checkbox" id="clear-on-click">
+    Clear <strong>all</strong> browser cache on click
+  </label>
+  <label style="margin-top: 0.5em; display: block;">
+    <input type="checkbox" id="invert-badge">
+    Invert badge colours (coloured background, white text)
+  </label>
+  <div id="status"></div>
+  <script src="options.js"></script>
+</body>
+</html>

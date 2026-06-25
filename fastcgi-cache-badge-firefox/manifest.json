@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "FastCGI Cache Badge",
+  "version": "1.0",
+  "description": "Shows nginx fastcgi-cache response header (HIT / MISS / BYPASS / EXPIRED) as a colour-coded badge on the toolbar icon.",
+  "permissions": [
+    "webRequest",
+    "webNavigation",
+    "tabs",
+    "storage",
+    "browsingData",
+    "<all_urls>"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "FastCGI Cache: —",
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    }
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  }
+}

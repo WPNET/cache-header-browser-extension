@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cache Captain — Options</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      background: #f0f2f5;
+      color: #1c1c2e;
+      width: 100%;
+      max-width: 480px;
+      overflow-x: hidden;
+      padding-bottom: 1.2em;
+    }
+
+    /* Header */
+    header {
+      background: #1c1c2e;
+      color: #fff;
+      padding: 0.85em 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 0.55em;
+    }
+    header h1 { font-size: 0.9em; font-weight: 600; letter-spacing: 0.03em; }
+    .badge-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #27ae60;
+      flex-shrink: 0;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      margin: 0.65em 0.75em 0;
+      border-radius: 8px;
+      border: 1px solid #e2e6ea;
+      overflow: hidden;
+    }
+    .card-title {
+      font-size: 0.68em;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #8492a6;
+      padding: 0.55em 1em 0.4em;
+      background: #f8f9fb;
+      border-bottom: 1px solid #e8ecf0;
+    }
+    .card-body { padding: 0.75em 1em; }
+
+    /* Header radio list */
+    .radio-list label {
+      display: flex;
+      align-items: center;
+      gap: 0.55em;
+      padding: 0.28em 0;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .radio-list label:hover { color: #2980b9; }
+    .radio-list input[type="radio"] { accent-color: #2980b9; flex-shrink: 0; }
+    .muted { color: #aab0bb; font-size: 0.88em; }
+
+    #custom-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-top: 0.15em;
+    }
+    #custom-row label { white-space: nowrap; }
+    #custom-input {
+      flex: 1;
+      font-family: monospace;
+      font-size: 0.9em;
+      padding: 0.25em 0.5em;
+      border: 1.5px solid #d0d5dd;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #custom-input:focus { border-color: #2980b9; }
+
+    /* Toggle row */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1em;
+      cursor: pointer;
+      padding: 0.1em 0;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 15px; height: 15px;
+      flex-shrink: 0;
+      accent-color: #27ae60;
+      cursor: pointer;
+    }
+    .toggle-label { flex: 1; min-width: 0; word-wrap: break-word; }
+    .toggle-label small { color: #aab0bb; }
+
+    /* Sub-options */
+    .sub-options {
+      margin-top: 0.85em;
+      padding-top: 0.85em;
+      border-top: 1px solid #edf0f4;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75em;
+    }
+    .sub-options[hidden] { display: none; }
+
+    .sub-title {
+      font-size: 0.7em;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #8492a6;
+      margin-bottom: 0.4em;
+    }
+
+    /* Chips (What to clear) */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.4em; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22em 0.7em;
+      border: 1.5px solid #d0d5dd;
+      border-radius: 20px;
+      font-size: 0.88em;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      color: #555;
+    }
+    .chip input[type="checkbox"] { display: none; }
+    .chip:has(input:checked) {
+      background: #eafaf1;
+      border-color: #27ae60;
+      color: #1a7a41;
+      font-weight: 600;
+    }
+
+    /* Pills (Time range / Scope) */
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.35em; }
+    .pill {
+      padding: 0.22em 0.75em;
+      border: 1.5px solid #d0d5dd;
+      border-radius: 20px;
+      font-size: 0.88em;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      color: #555;
+    }
+    .pill input[type="radio"] { display: none; }
+    .pill:has(input:checked) {
+      background: #eaf3fb;
+      border-color: #2980b9;
+      color: #1a5f8f;
+      font-weight: 600;
+    }
+
+    /* Help text */
+    .help-text {
+      font-size: 0.78em;
+      color: #8492a6;
+      line-height: 1.6;
+      margin-top: 0.55em;
+      padding: 0.5em 0.65em;
+      background: #f8f9fb;
+      border-radius: 5px;
+      border: 1px solid #edf0f4;
+    }
+    .help-text p { margin: 0; word-wrap: break-word; }
+    .help-text strong { color: #555; font-weight: 600; }
+
+    /* Status */
+    #status {
+      font-size: 0.8em;
+      color: #27ae60;
+      min-height: 1.3em;
+      text-align: center;
+      padding-top: 0.5em;
+      margin: 0 0.75em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge-dot"></span>
+    <h1>Cache Captain — Options</h1>
+  </header>
+
+  <div class="card">
+    <div class="card-title">Monitored Header</div>
+    <div class="card-body">
+      <div class="radio-list" id="header-group">
+        <label><input type="radio" name="header" value="fastcgi-cache"> fastcgi-cache</label>
+        <label><input type="radio" name="header" value="x-fastcgi-cache"> x-fastcgi-cache</label>
+        <label><input type="radio" name="header" value="x-cache"> x-cache</label>
+        <label><input type="radio" name="header" value="x-cache-status"> x-cache-status</label>
+        <label><input type="radio" name="header" value="cf-cache-status"> cf-cache-status <span class="muted">Cloudflare</span></label>
+        <div id="custom-row">
+          <label><input type="radio" name="header" value="custom"> Custom:</label>
+          <input type="text" id="custom-input" placeholder="e.g. x-varnish-cache" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Badge</div>
+    <div class="card-body">
+      <label class="toggle-row">
+        <span class="toggle-label">Invert colours <small>(coloured bg, white text)</small></span>
+        <input type="checkbox" id="invert-badge">
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Click Action</div>
+    <div class="card-body">
+      <div class="sub-title" style="margin-bottom:0.5em">When icon is clicked</div>
+      <div class="pill-row">
+        <label class="pill"><input type="radio" name="clear-action" value="reload-only"> Reload</label>
+        <label class="pill"><input type="radio" name="clear-action" value="clear"> Clear data</label>
+        <label class="pill"><input type="radio" name="clear-action" value="reload"> Clear + Reload</label>
+      </div>
+
+      <div id="clear-options" class="sub-options" hidden>
+
+        <div id="clear-data-options">
+          <div>
+            <div class="sub-title">What to clear</div>
+            <div class="chip-row">
+              <label class="chip"><input type="checkbox" id="clear-cache"> Cache</label>
+              <label class="chip"><input type="checkbox" id="clear-cookies"> Cookies</label>
+              <label class="chip"><input type="checkbox" id="clear-localstorage"> Local storage</label>
+              <label class="chip"><input type="checkbox" id="clear-indexeddb"> IndexedDB</label>
+              <label class="chip"><input type="checkbox" id="clear-serviceworkers"> Service workers</label>
+              <label class="chip"><input type="checkbox" id="clear-cachestorage"> Cache storage</label>
+            </div>
+            <div class="help-text">
+              <p><strong>Cache</strong> — Browser HTTP cache; stores page assets to avoid re-downloading.</p>
+              <p><strong>Cookies</strong> — Session tokens &amp; preferences; may log you out.</p>
+              <p><strong>Local storage</strong> — Persistent key/value data stored by the site's JS.</p>
+              <p><strong>IndexedDB</strong> — Structured DB used by SPAs and PWAs for offline data.</p>
+              <p><strong>Service workers</strong> — Intercept requests; can serve stale content even after clearing the HTTP cache.</p>
+              <p><strong>Cache storage</strong> — Assets cached by service workers via the Caches API; separate from the HTTP cache.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="sub-title">Time range</div>
+            <div class="pill-row">
+              <label class="pill"><input type="radio" name="time-range" value="hour"> Last hour</label>
+              <label class="pill"><input type="radio" name="time-range" value="day"> Last 24 h</label>
+              <label class="pill"><input type="radio" name="time-range" value="week"> Last 7 days</label>
+              <label class="pill"><input type="radio" name="time-range" value="all"> All time</label>
+            </div>
+          </div>
+
+          <div>
+            <div class="sub-title">Scope</div>
+            <div class="pill-row">
+              <label class="pill"><input type="radio" name="scope" value="all"> All domains</label>
+              <label class="pill"><input type="radio" name="scope" value="site"> Current site only</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="bypass-cache-row">
+          <div class="sub-title">Reload behaviour</div>
+          <label class="toggle-row">
+            <span class="toggle-label">Bypass server cache on Reload <small>(hard reload — forces a fresh server response)</small></span>
+            <input type="checkbox" id="bypass-cache">
+          </label>
+        </div>
+
+        <div id="notify-row">
+          <div class="sub-title">Notification</div>
+          <label class="toggle-row">
+            <span class="toggle-label">Show notification when data is cleared</span>
+            <input type="checkbox" id="notify-on-clear">
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="status"></div>
+  <script src="options.js"></script>
+</body>
+</html>
