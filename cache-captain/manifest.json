@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Cache Captain",
   "version": "1.0",
-  "description": "A developer and testing tool for managing browser cache and monitoring HTTP cache response headers. Click the toolbar icon to reload, clear browser data, or both. Monitors any configurable response header (fastcgi-cache, x-cache, cf-cache-status, and more) and displays the cache status as a colour-coded badge — HIT, MISS, BYPASS, EXPIRED, and STALE — on every page load.",
+  "description": "Monitor HTTP cache headers (fastcgi-cache, x-cache, cf-cache-status) as a colour-coded badge; clear browser cache in one click.",
   "permissions": [
     "webRequest",
     "webNavigation",
