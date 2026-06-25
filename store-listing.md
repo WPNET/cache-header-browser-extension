@@ -54,7 +54,7 @@ Monitor a website's HTTP cache response header and display its status as a toolb
 | Permission | Justification |
 |------------|---------------|
 | `webRequest` | Read the configured cache response header (e.g. fastcgi-cache, cf-cache-status) from navigation responses to determine cache status. |
-| Host permissions (`<all_urls>`) | The cache header can appear on any site the user visits, so the header must be readable across all hosts. |
+| Host permissions (`http://*/*`, `https://*/*`) | The cache header can appear on any HTTP/HTTPS site the user visits, so the header must be readable across all such hosts. Scoped to http/https only; no page content is read. |
 | `webNavigation` | Detect navigation start and completion in order to show the correct cache-status badge per tab. |
 | `tabs` | Apply the badge/title to the correct tab and reload it on the click action. |
 | `browsingData` | Clear the specific browsing-data types the user selects (cache, cookies, storage, etc.). |
