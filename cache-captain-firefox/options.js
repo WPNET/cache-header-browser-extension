@@ -39,7 +39,7 @@ browser.storage.sync.get({
   notifyOnClear:     false,
 }).then((data) => {
   const saved = (data.headerName || DEFAULT).trim().toLowerCase();
-  const presetRadio = headerGroup.querySelector(`input[value="${saved}"]`);
+  const presetRadio = headerGroup.querySelector(`input[value="${CSS.escape(saved)}"]`);
   if (presetRadio) {
     presetRadio.checked = true;
   } else {

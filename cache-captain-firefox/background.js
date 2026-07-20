@@ -204,7 +204,7 @@ browser.webRequest.onHeadersReceived.addListener(
     if (details.type !== "main_frame") return;
     const tabId = details.tabId;
     if (tabId < 0) return;
-    const header = details.responseHeaders.find(
+    const header = details.responseHeaders?.find(
       (h) => h.name.toLowerCase() === monitoredHeader
     );
     if (header) {
