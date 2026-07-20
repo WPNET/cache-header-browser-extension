@@ -43,7 +43,6 @@ let clearCookies        = false;
 let clearLocalStorage   = false;
 let clearIndexedDB      = false;
 let clearServiceWorkers = false;
-let clearCacheStorage   = false;
 let clearTimeRange    = "all";
 let clearScope        = "all";
 let bypassCache       = false;
@@ -147,7 +146,6 @@ const settingsReady = browser.storage.sync
     clearLocalStorage:    false,
     clearIndexedDB:       false,
     clearServiceWorkers:  false,
-    clearCacheStorage:    false,
     clearTimeRange:   "all",
     clearScope:       "all",
     bypassCache:      false,
@@ -162,7 +160,6 @@ const settingsReady = browser.storage.sync
     clearLocalStorage   = !!data.clearLocalStorage;
     clearIndexedDB      = !!data.clearIndexedDB;
     clearServiceWorkers = !!data.clearServiceWorkers;
-    clearCacheStorage   = !!data.clearCacheStorage;
     clearTimeRange    = data.clearTimeRange || "all";
     clearScope        = data.clearScope     || "all";
     bypassCache       = !!data.bypassCache;
@@ -180,7 +177,6 @@ browser.storage.onChanged.addListener((changes, area) => {
   if (changes.clearLocalStorage)   clearLocalStorage   = !!changes.clearLocalStorage.newValue;
   if (changes.clearIndexedDB)      clearIndexedDB      = !!changes.clearIndexedDB.newValue;
   if (changes.clearServiceWorkers) clearServiceWorkers = !!changes.clearServiceWorkers.newValue;
-  if (changes.clearCacheStorage)   clearCacheStorage   = !!changes.clearCacheStorage.newValue;
   if (changes.clearTimeRange)      clearTimeRange      = changes.clearTimeRange.newValue  || "all";
   if (changes.clearScope)          clearScope          = changes.clearScope.newValue      || "all";
   if (changes.bypassCache)         bypassCache         = !!changes.bypassCache.newValue;
@@ -261,7 +257,6 @@ browser.browserAction.onClicked.addListener(async (tab) => {
     if (clearLocalStorage)   dataTypes.localStorage = true;
     if (clearIndexedDB)      dataTypes.indexedDB = true;
     if (clearServiceWorkers) dataTypes.serviceWorkers = true;
-    if (clearCacheStorage)   dataTypes.cacheStorage = true;
     if (Object.keys(dataTypes).length === 0) return;
 
     const SINCE_MS = { hour: 3_600_000, day: 86_400_000, week: 604_800_000 };

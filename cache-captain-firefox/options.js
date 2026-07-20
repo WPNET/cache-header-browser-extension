@@ -32,7 +32,6 @@ browser.storage.sync.get({
   clearLocalStorage:    false,
   clearIndexedDB:       false,
   clearServiceWorkers:  false,
-  clearCacheStorage:    false,
   clearTimeRange:    "all",
   clearScope:        "all",
   bypassCache:       false,
@@ -53,7 +52,6 @@ browser.storage.sync.get({
   el("clear-localstorage").checked   = !!data.clearLocalStorage;
   el("clear-indexeddb").checked      = !!data.clearIndexedDB;
   el("clear-serviceworkers").checked = !!data.clearServiceWorkers;
-  el("clear-cachestorage").checked   = !!data.clearCacheStorage;
 
   const action = data.clearAction || "reload-only";
   document.querySelector(`input[name="clear-action"][value="${action}"]`).checked = true;
@@ -101,8 +99,6 @@ el("clear-indexeddb").addEventListener("change",
   () => save({ clearIndexedDB: el("clear-indexeddb").checked }));
 el("clear-serviceworkers").addEventListener("change",
   () => save({ clearServiceWorkers: el("clear-serviceworkers").checked }));
-el("clear-cachestorage").addEventListener("change",
-  () => save({ clearCacheStorage: el("clear-cachestorage").checked }));
 el("notify-on-clear").addEventListener("change",
   () => save({ notifyOnClear: el("notify-on-clear").checked }));
 el("bypass-cache").addEventListener("change",
